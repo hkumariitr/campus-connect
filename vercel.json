@@ -7,6 +7,12 @@
 		  "distDir": "frontend/dist"
 		}
 	  }
+	],
+	"routes": [
+	  {
+		"src": "/(.*)",
+		"dest": "/index.html"
+	  }
 	]
   }
   
