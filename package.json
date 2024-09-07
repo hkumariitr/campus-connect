@@ -6,7 +6,7 @@
 	"scripts": {
 		"dev": "nodemon backend/server.js",
 		"start": "cross-env NODE_ENV=production node backend/server.js",
-		"build": "npm install && cd frontend && npm install && npm run build && cd .."
+		 "build": "npm install && cd frontend && npm install && npm run build && cd .. && npm run start"
 	},
 	"type": "module",
 	"keywords": [],
