@@ -38,12 +38,24 @@ app.use("/api/messages", messageRoutes);
 // http://localhost:5000 => backend,frontend
 
 if (process.env.NODE_ENV === "production") {
-	app.use(express.static(path.join(__dirname, "/frontend/dist")));
+	const frontendBuildPath = path.join(__dirname, "..", "frontend", "dist");
+	console.log("Frontend build path:", frontendBuildPath);
+	console.log("Directory contents:", fs.readdirSync(frontendBuildPath));
 
-	// react app
+	app.use(express.static(frontendBuildPath));
+
 	app.get("*", (req, res) => {
-		res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
+	  const indexPath = path.join(frontendBuildPath, "index.html");
+	  console.log("Attempting to serve:", indexPath);
+	  if (fs.existsSync(indexPath)) {
+		res.sendFile(indexPath);
+	  } else {
+		res.status(404).send("index.html not found");
+	  }
 	});
-}
-
+  } else {
+	app.get("/", (req, res) => {
+	  res.send("API is running...");
+	});
+  }
 server.listen(PORT, () => console.log(`Server started at http://localhost:${PORT}`));
